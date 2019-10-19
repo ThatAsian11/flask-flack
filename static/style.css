@@ -1,0 +1,81 @@
+html, body {
+  background-color: #323c3d;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+.website {
+  margin: 0;
+  color: white;
+  height: 100%;
+}
+li {
+  list-style-type: square;
+}
+#username_enter {
+  display: none;
+}
+#channel_header {
+  background-color: #323c3d;
+  padding: 10px 20px 10px 20px;
+}
+#message_area {
+  width: 70%;
+  position: absolute;
+  height: 75%;
+  display: block;
+  float: left;
+  background: #515555;
+  padding-bottom: 10px;
+}
+#channel_list {
+  background-color: #515555;
+  position: absolute;
+  left: 70%;
+  height: 75%;
+  width: 30%;
+}
+#message_view {
+  border: 1px solid black;
+  background: #574973;
+  margin: 10px;
+  height: 85%;
+  padding: 5px;
+  overflow: scroll;
+}
+.form-group {
+  margin: 10px;
+}
+#username_overlay {
+  padding: 200px;
+  padding-left: 600px;
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 44, 48, 0.89);
+  z-index: 2;
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 5px;
+   width: 100%;
+   background-color: #323c3d;
+   color: white;
+   text-align: center;
+}
+.hide_button {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid black;
+  color: white;
+  background-color: #423955;
+  text-decoration: none;
+  font-size: 10px;
+  float: right;
+  width: 20px;
+  height: 18px;
+}
+.hide_button:hover {
+  background-color: #746494;
+}

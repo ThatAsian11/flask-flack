@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Channel
+{% endblock %}
+{% block main %}
+<div class="website">
+  <div id="username_overlay">
+    <div class="form-inline my-2 my-lg-0">
+      <legend style="color: white">Please enter a username</legend>
+        <input class="form-control mr-sm-2" id="username_submit" placeholder="Username">
+        <button type="button" class="btn btn-secondary" id="username_button">Enter</button>
+    </div>
+  </div>
+  <div id="channel_header"><h1 id="channel_name"></h1></div>
+  <div id="message_area">
+    <div id="message_view"><ul id="messages"></ul>
+    </div>
+    <div class="form-group">
+      <form id="new_message" onsubmit"javascript:return false">
+        <input class="form-control" autocomplete="off" id="message_submit" placeholder="Message">
+      </form>
+    </div>
+  </div>
+  <div id="channel_list">
+    <div class="form-group">
+      <label for="exampleSelect2">Create a channel</label>
+      <form id="channel_create">
+        <input class="form-control" id="create_channel" autocomplete="off" placeholder="Channel name">
+      </form>
+    </div>
+    <div id="channels_list">
+      <div class="form-group">
+        <label for="exampleSelect2">Channels</label>
+        <form id="Channel_pick" onsubmit"javascript:return false">
+          <select multiple="" class="form-control" id="channels"></select>
+        </form>
+    <hr>
+      <div id="users_list">
+        <div class="form-group">
+          <label for="exampleSelect2">All Users</label>
+          <form id="users_all" onsubmit"javascript:return false">
+            <select multiple="" class="form-control" id="users"></select>
+          </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><h4>A chat application for CS50W by Sadat</h4></div>
+  </div>
+{% endblock %}
