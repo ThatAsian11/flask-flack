@@ -10,6 +10,8 @@ const hide_message = e => {
     alert('You can only hide your own messages!')
   }
 }
+
+
 document.addEventListener('DOMContentLoaded', () => {
   // Connecting the web socket
   var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Else disable message field because channel has to be selected first
        document.getElementById("message_submit").disabled = true;
      }
+     
     // Add new username when entered
     document.querySelector('#username_button').onclick = () => {
       username = document.querySelector('#username_submit').value

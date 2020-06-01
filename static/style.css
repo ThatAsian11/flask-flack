@@ -16,44 +16,52 @@ li {
 }
 #channel_header {
   background-color: #323c3d;
-  padding: 10px 20px 10px 20px;
 }
 #message_area {
-  width: 70%;
+  width: 80%;
   position: absolute;
-  height: 75%;
+  height: 100%;
   display: block;
   float: left;
   background: #515555;
   padding-bottom: 10px;
 }
 #channel_list {
-  background-color: #515555;
+  background-color: #282730;
   position: absolute;
-  left: 70%;
-  height: 75%;
-  width: 30%;
+  left: 80%;
+  height: 100%;
+  width: 20%;
 }
 #message_view {
-  border: 1px solid black;
-  background: #574973;
+  background: #697488;
   margin: 10px;
   height: 85%;
   padding: 5px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .form-group {
   margin: 10px;
 }
 #username_overlay {
-  padding: 200px;
-  padding-left: 600px;
-  position: fixed;
-  display: block;
+  /* padding: 200px;
+  padding-left: 600px; */
+  /* position: fixed;
+
   width: 100%;
   height: 100%;
-  background: rgba(44, 44, 48, 0.89);
-  z-index: 2;
+  background: rgba(44, 44, 48, 0.89); */
+  display: block;
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
 .footer {
    position: fixed;
@@ -78,4 +86,27 @@ li {
 }
 .hide_button:hover {
   background-color: #746494;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #504e4e;
+  border-radius: 3px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a09e9e;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #808080;
 }

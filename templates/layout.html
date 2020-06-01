@@ -6,7 +6,7 @@
 		<meta name = "viewport" content = "width=device-width, initial-scale=1"/>
 
 		<!-- documentation at http://getbootstrap.com/docs/4.0/, alternative themes at https://bootswatch.com/4-alpha/ -->
-	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 	    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
 
@@ -25,9 +25,6 @@
 	    <title>Flack: {% block title %}{% endblock %}</title>
   	</head>
     <body>
-      <nav class="navbar navbar-expand-md navbar-light bg-light border">
-          <a class="navbar-brand" href="/">Flack</a>
-      </nav>
   		<main>
         {% block main %}{% endblock %}
       </main>
