@@ -1,3 +1,5 @@
+// Connecting the web socket
+var socket = io.connect('http://' + document.domain + ':' + location.port);
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -12,38 +14,13 @@ const hide_message = e => {
     list.removeChild(hide_item);
   }
   else {
-    alert('You can only hide your own messages!')
+    socket.emit("problem", "You can only hide your own messages!");
   }
 };
-
+// Add a message to the message board
 const add_message = (id, time, user, message) => {
   let messageArea = $("#messages");
   // let current_user = myStorage.getItem('savedUser');
-  // messageArea.append(`
-        
-  //   <li id="${id}" class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-  //   <div class="input-group-prepend">
-  //         <div class="input-group-text">@</div>
-  //       </div>
-  //   ${user} : ${message}
-  //   <span class="badge badge-dark badge-pill">${time}</span>
-  //   </li>
-    
-  // `);
-  // messageArea.append(`
-  // <div href="#" id="${id}" class="list-group-item list-group-item-dark mt-1 rounded h-25">
-  //   <div class="d-flex w-100 justify-content-between">
-  //     <p class="mb-1 text-secondary">${user}</p>
-      
-  //     <span class="badge badge-secondary">${time}</span>
-  //     <button type="button" class="close" aria-label="Close">
-  //       <span aria-hidden="true">&times;</span>
-  //     </button>
-  //   </div>
-  //   <br>
-  //   <h5 class="mb-1 pl-2 lead">${message}</h5>
-  // </div>
-  // `);
   messageArea.append(`
   <div href="#" id="${id}" class="list-group-item list-group-item-dark mt-1 rounded h-25">
     <div class="d-flex w-100 bd-highlight">
@@ -71,8 +48,7 @@ const add_message = (id, time, user, message) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Connecting the web socket
-  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  
   // Setting up local storage in browser
   myStorage = window.localStorage;
 
@@ -103,18 +79,24 @@ document.addEventListener('DOMContentLoaded', () => {
      };
 
     // Add new username when entered
-    document.querySelector('#username_button').onclick = () => {
-      username = document.querySelector('#username_submit').value
+    document.querySelector('#username_entry').onsubmit = () => {
+      username = document.querySelector('#username_submit').value;
       // Don't let username entry be blank
       if(username !== '') {
-        myStorage.setItem('savedUser', username)
-        socket.emit("username_enter", username)
+        myStorage.setItem('savedUser', username);
+        socket.emit("username_enter", username);
         socket.emit("get_users");
         // Remove overlay when username has been submitted
         document.getElementById("username_overlay").style.display = "none";
-        return false
+        return false;
+
       }
-    }
+      else {
+        socket.emit("error", "Please enter a username");
+        return false;
+      };
+      
+    };
 
     // Get all existing channels and fill list of channels
     socket.emit("get_channels");
@@ -127,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
             el.textContent = opt;
             el.value = opt;
             list.appendChild(el);
+        };
 
-          }
       // Auto select previously selected channel
       for (var x = 0; x < channel_data.length; x++) {
         var opt = channel_data[x];
@@ -139,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       });
+
     // Get all users and list them
     socket.on('users_all', users => {
       // var list = document.querySelector('#users');
@@ -146,19 +129,15 @@ document.addEventListener('DOMContentLoaded', () => {
       current_user = myStorage.getItem("savedUser");
       let user_data = users;
       for (var i = 0; i < user_data.length; i++) {
-            if (user_data[i] == current_user) {
-              list.append(`<li class="list-group-item active">${user_data[i]}</li>`);
-            }
-            else {
-              list.append(`<li class="list-group-item">${user_data[i]}</li>`);
-            }
-            // var opt = user_data[i];
-            // var el = document.createElement('option');
-            // el.textContent = opt;
-            // el.value = opt;
-            // list.appendChild(el);
-            }
+          if (user_data[i] == current_user) {
+            list.append(`<li class="list-group-item active">${user_data[i]}</li>`);
+          }
+          else {
+            list.append(`<li class="list-group-item">${user_data[i]}</li>`);
+          };
+        };
     });
+
     // Get input of user's channel entry
     document.querySelector('#channel_create').onsubmit = () => {
         channel = document.querySelector('#create_channel').value;
@@ -169,11 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
           return false;
         }
         else {
-          problem = "Type what you want your channel to be named!";
-          socket.emit('error', problem);
+          socket.emit('error', "Type what you want your channel to be named!");
           return false;
         }
     };
+
     // Add new channel to list of options
     socket.on('channel_added', channel => {
       var list = document.querySelector('#channels');
@@ -184,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       el.value = opt;
       list.appendChild(el);
       });
+
     // Get channel pick if user changes selection
     var choice = document.getElementById('channels');
     choice.addEventListener("change", () => {
@@ -198,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       socket.emit('get_messages', channel);
       });
+
     // Get input of new message
     document.querySelector('#new_message').onsubmit = () => {
         // Send the message, user, channel and time to server
@@ -209,33 +190,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector("#message_submit").value = '';
         return false;
         } else {
-          problem = "Type something to send a message!";
-          socket.emit('error', problem);
+          socket.emit('error', "Type something to send a message!");
           return false;
         }
     };
+
     // Add new message with a numbered id
     socket.on('announce message', content => {
       check = document.getElementById('messages').hasChildNodes();
+      // Add the message with the appropriate id
       if (!check) {
         add_message(0, content.my_time, content.user, content.msg);
-        // const li = document.createElement('li');
-        // li.id = 0;
-        
-        // li.classList = "list-group-item list-group-item-dark";
-        // li.innerHTML = `<small>${content.my_time}</small> | <strong>${content.user}</strong> : ${content.msg} <button class="hide_button" onclick='hide_message(this)' data-user=${content.user}>X</button>`;
-        // document.querySelector('#messages').append(li);
       }
       else {
-        
-        const li = document.createElement('li');
-        ul = document.getElementById('messages')
-        x = parseInt(ul.lastElementChild.id)
-        // li.id = x + 1;
-        add_message(x + 1, content.my_time, content.user, content.msg)
-        // li.classList = "list-group-item list-group-item-dark";
-        // li.innerHTML = `<small>${content.my_time}</small> | <strong>${content.user}</strong> : ${content.msg} <button class="hide_button" onclick='hide_message(this)' data-user=${content.user}>X</button>`;
-        // document.querySelector('#messages').append(li);
+        ul = document.getElementById('messages');
+        x = parseInt(ul.lastElementChild.id);
+        add_message(x + 1, content.my_time, content.user, content.msg);
       }
     });
 
@@ -243,13 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('broadcast messages', content => {
         channel = myStorage.getItem('savedChannel')
         for(var i = 0; i < content[channel].length; i++){
-            
-            add_message(i, content[channel][i].my_time, content[channel][i].user, content[channel][i].msg)
-            // const li = document.createElement('li');
-            // li.id = i;
-            // li.classList = "list-group-item list-group-item-dark";
-            // li.innerHTML = `<small>${content[channel][i].my_time}</small> | <strong>${content[channel][i].user}</strong> : ${content[channel][i].msg} <button class="hide_button" onclick='hide_message(this)' data-user=${content[channel][i].user}>X</button>`;
-            // document.querySelector("#messages").append(li);
+            // Add the message to the board
+            add_message(i, content[channel][i].my_time, content[channel][i].user, content[channel][i].msg);
         }
     });
 
@@ -259,9 +224,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     };
 });
-// const add_message = (id, time, user, message) => {
-//   let messageArea = $("#messages");
-//   messageArea.append(`
-//     <li id="${id}" class="list-group-item list-group-item-dark"><small>${time}</small> | <strong>${user}</strong> : ${message}</li>
-//   `)
-// };

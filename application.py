@@ -81,6 +81,10 @@ def all_messages(channel):
         data = my_messages
         emit("broadcast messages", data)
 
+@socketio.on("problem")
+def handle_error(error):
+    emit("error", error)
+
 @app.route("/")
 def index():
     return render_template("index.html")
