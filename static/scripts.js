@@ -1,5 +1,7 @@
 // Connecting the web socket
 var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+// Enable popper js tooltip
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -20,7 +22,6 @@ const hide_message = e => {
 // Add a message to the message board
 const add_message = (id, time, user, message) => {
   let messageArea = $("#messages");
-  // let current_user = myStorage.getItem('savedUser');
   messageArea.append(`
   <div href="#" id="${id}" class="list-group-item list-group-item-dark mt-1 rounded h-25">
     <div class="d-flex w-100 bd-highlight">
@@ -35,6 +36,9 @@ const add_message = (id, time, user, message) => {
     <h5 class="mb-1 pl-2 lead">${message}</h5>
   </div>
   `);
+
+  // Enable the following if you want the current users messages to be highlighted in blue
+  // let current_user = myStorage.getItem('savedUser');
   // if (user == current_user) {
   //   messageArea.append(`
   //   <li id="${id}" class="list-group-item list-group-item-dark active"><small>${time}</small> | <strong>${user}</strong> : ${message}</li>

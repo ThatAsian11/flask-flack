@@ -5,14 +5,10 @@ html, body {
 }
 .website {
   margin: 0;
-  /* color: white; */
   height: 100%;
 }
 li {
   list-style-type: none;
-}
-#username_enter {
-  display: none;
 }
 #channel_header {
   background-color: #35333f;
@@ -35,9 +31,7 @@ li {
 }
 #message_view {
   background: #4d4b5a;
-  /* margin: 10px; */
   height: 85%;
-  /* padding: 5px; */
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -56,31 +50,8 @@ li {
   background-color: rgba(0, 0, 0, 0.63); /* Black background with opacity */
   z-index: 100; /* Specify a stack order in case you're using a different order for other elements */
 }
-.footer {
-   position: fixed;
-   left: 0;
-   bottom: 5px;
-   width: 100%;
-   background-color: #323c3d;
-   color: white;
-   text-align: center;
-}
-.hide_button {
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid black;
-  color: white;
-  background-color: #423955;
-  text-decoration: none;
-  font-size: 10px;
-  float: right;
-  width: 20px;
-  height: 18px;
-}
-.hide_button:hover {
-  background-color: #746494;
-}
 
+/* Custom scrollbar */
 /* width */
 ::-webkit-scrollbar {
   width: 4px;

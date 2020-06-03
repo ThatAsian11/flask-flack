@@ -24,7 +24,6 @@ def after_request(response):
 users = []
 channels = []
 my_messages = {}
-#messages = {'channel': [('timestamp','displayname', 'content')]}
 
 @socketio.on("username_enter")
 def username_entered(username):
