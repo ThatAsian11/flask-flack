@@ -1,6 +1,11 @@
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 // Allows user to temprarily hide their own messages
 const hide_message = e => {
-  item = e.parentNode;
+  console.log("hide button clicked");
+  item = e.parentNode.parentNode;
   list = document.querySelector('#messages');
   hide_item = document.getElementById(item.id)
   if (myStorage.getItem('savedUser') == e.dataset.user) {
@@ -13,7 +18,7 @@ const hide_message = e => {
 
 const add_message = (id, time, user, message) => {
   let messageArea = $("#messages");
-  let current_user = myStorage.getItem('savedUser');
+  // let current_user = myStorage.getItem('savedUser');
   // messageArea.append(`
         
   //   <li id="${id}" class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
@@ -25,15 +30,32 @@ const add_message = (id, time, user, message) => {
   //   </li>
     
   // `);
-
+  // messageArea.append(`
+  // <div href="#" id="${id}" class="list-group-item list-group-item-dark mt-1 rounded h-25">
+  //   <div class="d-flex w-100 justify-content-between">
+  //     <p class="mb-1 text-secondary">${user}</p>
+      
+  //     <span class="badge badge-secondary">${time}</span>
+  //     <button type="button" class="close" aria-label="Close">
+  //       <span aria-hidden="true">&times;</span>
+  //     </button>
+  //   </div>
+  //   <br>
+  //   <h5 class="mb-1 pl-2 lead">${message}</h5>
+  // </div>
+  // `);
   messageArea.append(`
-  <div href="#" id="${id}" class="list-group-item list-group-item-dark">
-    <div class="d-flex w-100 justify-content-between">
-      <p class="mb-1 text-secondary">${user}</p>
-      <span class="badge badge-secondary">${time}</span>
+  <div href="#" id="${id}" class="list-group-item list-group-item-dark mt-1 rounded h-25">
+    <div class="d-flex w-100 bd-highlight">
+      <p class="mb-1 flex-grow-1 bd-highlight text-secondary">${user}</p>
+      
+      <small class="text-muted bd-highlight mt-1 mr-1">${time}</small>
+      <button type="button" class="close bd-highlight" onclick='hide_message(this)' data-user=${user} aria-label="Close" data-toggle="tooltip" data-placement="top" title="Hide Message">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <br>
-    <h3 class="mb-1 pl-2">${message}</h3>
+    <h5 class="mb-1 pl-2 lead">${message}</h5>
   </div>
   `);
   // if (user == current_user) {
@@ -67,22 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Automaticall select previously selected channel if saved in local storage
     if(myStorage.getItem('savedChannel')) {
-      let channelArea = document.querySelector("#channel_list");
-      if (channelArea.hasChildNodes()) {
+      // let channelArea = document.querySelector("#channels");
+      // if (channelArea.hasChildNodes()) {
+        console.log("passed");
         prev_channel = myStorage.getItem('savedChannel')
         document.querySelector("#channel_name").innerHTML = `${prev_channel}`;
-      }
+      // }
       
     }
     else {
       // Else disable message field because channel has to be selected first
        document.getElementById("message_submit").disabled = true;
-     }
+     };
 
     // Add new username when entered
     document.querySelector('#username_button').onclick = () => {
       username = document.querySelector('#username_submit').value
-      // Don't let usename entry be blank
+      // Don't let username entry be blank
       if(username !== '') {
         myStorage.setItem('savedUser', username)
         socket.emit("username_enter", username)
