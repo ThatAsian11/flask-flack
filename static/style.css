@@ -1,81 +1,76 @@
 html, body {
-  background-color: #323c3d;
+  background-color: #4d4b5a;
   height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 .website {
   margin: 0;
-  color: white;
   height: 100%;
 }
 li {
-  list-style-type: square;
-}
-#username_enter {
-  display: none;
+  list-style-type: none;
 }
 #channel_header {
-  background-color: #323c3d;
-  padding: 10px 20px 10px 20px;
+  background-color: #35333f;
 }
 #message_area {
-  width: 70%;
+  width: 80%;
   position: absolute;
-  height: 75%;
+  height: 100%;
   display: block;
   float: left;
-  background: #515555;
+  background: #4d4b5a;
   padding-bottom: 10px;
 }
 #channel_list {
-  background-color: #515555;
+  background-color: #282730;
   position: absolute;
-  left: 70%;
-  height: 75%;
-  width: 30%;
+  left: 80%;
+  height: 100%;
+  width: 20%;
 }
 #message_view {
-  border: 1px solid black;
-  background: #574973;
-  margin: 10px;
+  background: #4d4b5a;
   height: 85%;
-  padding: 5px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .form-group {
   margin: 10px;
 }
 #username_overlay {
-  padding: 200px;
-  padding-left: 600px;
-  position: fixed;
   display: block;
-  width: 100%;
-  height: 100%;
-  background: rgba(44, 44, 48, 0.89);
-  z-index: 2;
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.63); /* Black background with opacity */
+  z-index: 100; /* Specify a stack order in case you're using a different order for other elements */
 }
-.footer {
-   position: fixed;
-   left: 0;
-   bottom: 5px;
-   width: 100%;
-   background-color: #323c3d;
-   color: white;
-   text-align: center;
+
+/* Custom scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
 }
-.hide_button {
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid black;
-  color: white;
-  background-color: #423955;
-  text-decoration: none;
-  font-size: 10px;
-  float: right;
-  width: 20px;
-  height: 18px;
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #504e4e;
+  border-radius: 3px;
 }
-.hide_button:hover {
-  background-color: #746494;
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a09e9e;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #808080;
 }

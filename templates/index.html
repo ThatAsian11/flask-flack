@@ -1,50 +1,57 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Channel
-{% endblock %}
 {% block main %}
 <div class="website">
-  <div id="username_overlay">
-    <div class="form-inline my-2 my-lg-0">
-      <legend style="color: white">Please enter a username</legend>
-        <input class="form-control mr-sm-2" id="username_submit" placeholder="Username">
-        <button type="button" class="btn btn-secondary" id="username_button">Enter</button>
-    </div>
-  </div>
-  <div id="channel_header"><h1 id="channel_name"></h1></div>
-  <div id="message_area">
-    <div id="message_view"><ul id="messages"></ul>
-    </div>
-    <div class="form-group">
-      <form id="new_message" onsubmit"javascript:return false">
-        <input class="form-control" autocomplete="off" id="message_submit" placeholder="Message">
+  <div id="username_overlay" class="p-5">
+    <div class="container mx-auto my-auto rounded-lg bg-light text-center p-5 m-5">
+      <form id="username_entry">
+        <h1>Please enter a username</h1>
+        <div class="form-row mt-4">
+          <div class="col-7 mt-4 ml-5">
+            <input class="form-control form-control-lg ml-5" id="username_submit" placeholder="Username">
+          </div>
+          <div class="col mt-4 mr-5">
+            <button type="submit" class="btn btn-lg btn-secondary" id="username_button">Enter</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
-  <div id="channel_list">
+  
+  <div id="message_area">
+    <div id="channel_header" class="text-center"><h3 class="display-4 text-monospace text-light text-uppercase" id="channel_name" class="p-2">Channel</h3></div>
+    <div id="message_view" class="rounded-lg shadow">
+      <div class="list-group m-3" id="messages">
+        
+      </div>
+    </div>
+    <div class="form-group m-3">
+      <form id="new_message" onsubmit="javascript:return false">
+        <input class="form-control" autocomplete="off" id="message_submit" placeholder="Message" maxlength="130">
+      </form>
+    </div>
+  </div>
+
+  <div id="channel_list" class="p-3">
     <div class="form-group">
-      <label for="exampleSelect2">Create a channel</label>
+      <label class="text-light" for="exampleSelect2">Create a channel</label>
       <form id="channel_create">
         <input class="form-control" id="create_channel" autocomplete="off" placeholder="Channel name">
       </form>
     </div>
     <div id="channels_list">
       <div class="form-group">
-        <label for="exampleSelect2">Channels</label>
-        <form id="Channel_pick" onsubmit"javascript:return false">
+        <label class="text-light" for="exampleSelect2">Channels</label>
+        <form id="Channel_pick" onsubmit="javascript:return false">
           <select multiple="" class="form-control" id="channels"></select>
-        </form>
-    <hr>
-      <div id="users_list">
-        <div class="form-group">
-          <label for="exampleSelect2">All Users</label>
-          <form id="users_all" onsubmit"javascript:return false">
-            <select multiple="" class="form-control" id="users"></select>
-          </form>
+        </form>      
       </div>
     </div>
+    <div id="users_list" class="m-2">
+      <label class="text-light" for="users">All Users</label>
+      <ul class="list-group" id="users">
+      </ul>
+    </div>
   </div>
-  <div class="footer"><h4>A chat application for CS50W by Sadat</h4></div>
-  </div>
+</div>
 {% endblock %}

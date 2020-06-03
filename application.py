@@ -24,7 +24,6 @@ def after_request(response):
 users = []
 channels = []
 my_messages = {}
-#messages = {'channel': [('timestamp','displayname', 'content')]}
 
 @socketio.on("username_enter")
 def username_entered(username):
@@ -63,7 +62,8 @@ def channel(channel):
 def sent_message(json):
     """Handle a new message being sent"""
     # Log the timestamp
-    my_time = time.strftime('%H:%M:%S on %d/%m/%y')
+    # my_time = time.strftime('%H:%M:%S on %d/%m/%y')
+    my_time = time.strftime('%I:%M:%S%p')
     # Assemble data into a dict
     my_data = {"user": json["user"], "msg" : json["msg"], "my_time": my_time}
     # Add data to the messages of the channel
@@ -79,6 +79,10 @@ def all_messages(channel):
     if channel in my_messages:
         data = my_messages
         emit("broadcast messages", data)
+
+@socketio.on("problem")
+def handle_error(error):
+    emit("error", error)
 
 @app.route("/")
 def index():
